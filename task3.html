@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Styling & JavaScript</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: #f5f9fc;
+    }
+
+    header {
+      background-color: #0066cc;
+      color: white;
+      padding: 1rem;
+    }
+
+    .carousel {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 500px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .carousel img {
+      width: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .api-data {
+      margin-top: 30px;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (max-width: 600px) {
+      header {
+        font-size: 1rem;
+      }
+      .api-data {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌟 Advanced Styling & JS Demo</h1>
+  </header>
+
+  <!-- Image Carousel -->
+  <div class="carousel">
+    <img id="carouselImage" src="https://source.unsplash.com/random/800x400?nature" alt="Carousel Image" />
+  </div>
+
+  <!-- API Data Section -->
+  <div class="api-data" id="jokeContainer">
+    <h2>Random Joke 🤹‍♂️</h2>
+    <p id="joke">Fetching joke...</p>
+    <button onclick="fetchJoke()">🔁 New Joke</button>
+  </div>
+
+  <script>
+    // Image Carousel Logic
+    const images = [
+      'https://source.unsplash.com/random/800x400?technology',
+      'https://source.unsplash.com/random/800x400?space',
+      'https://source.unsplash.com/random/800x400?city',
+    ];
+    let index = 0;
+    const imgElement = document.getElementById('carouselImage');
+
+    setInterval(() => {
+      index = (index + 1) % images.length;
+      imgElement.src = images[index];
+    }, 3000);
+
+    // Fetch Joke API
+    async function fetchJoke() {
+      const res = await fetch('https://official-joke-api.appspot.com/jokes/random');
+      const data = await res.json();
+      document.getElementById('joke').textContent = `${data.setup} - ${data.punchline}`;
+    }
+
+    fetchJoke(); // initial call
+  </script>
+</body>
+</html>
